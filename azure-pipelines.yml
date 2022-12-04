@@ -76,6 +76,7 @@ steps:
     inputs:
       versionSpec: '$(python.version)'
     displayName: 'Use Python $(python.version)'
+    condition: or(eq(variables.UseXRay, 'EnableXRay'), eq(variables.EnableOTel, 'true'))
 
   - script: |
       python -m pip install --upgrade pip
