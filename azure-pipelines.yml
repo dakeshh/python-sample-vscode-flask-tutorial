@@ -76,14 +76,16 @@ steps:
     inputs:
       versionSpec: '$(python.version)'
     displayName: 'Use Python $(python.version)'
-    condition: or(eq(variables.UseXRay, 'EnableXRay'), eq(variables.EnableOTel, 'true'))
+    condition: or(eq(${{ variables.UseXRay }}, 'EnableXRay'), eq(${{ variables.EnableOTel }}, 'true'))
 
   - script: |
       python -m pip install --upgrade pip
       pip install -r requirements.txt
     displayName: 'Install dependencies'
+    condition: or(eq(${{ variables.UseXRay }}, 'EnableXRay'), eq(${{ variables.EnableOTel }}, 'true'))
 
   - script: |
       pip install pytest pytest-azurepipelines
       pytest
     displayName: 'pytest'
+    condition: or(eq(${{ variables.UseXRay }}, 'EnableXRay'), eq(${{ variables.EnableOTel }}, 'true'))
