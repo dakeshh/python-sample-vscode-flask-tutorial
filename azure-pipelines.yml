@@ -3,6 +3,15 @@
 # Add steps that analyze code, save the dist with the build record, publish to a PyPI-compatible index, and more:
 # https://docs.microsoft.com/azure/devops/pipelines/languages/python
 
+parameters:
+  - name: clean
+    displayName: Checkout clean
+    type: boolean
+    default: false
+    values:
+    - false
+    - true
+
 trigger:
 - master
 
