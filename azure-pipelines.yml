@@ -3,6 +3,9 @@
 # Add steps that analyze code, save the dist with the build record, publish to a PyPI-compatible index, and more:
 # https://docs.microsoft.com/azure/devops/pipelines/languages/python
 
+trigger:
+  - master
+
 parameters:
   - name: myString
     type: string
@@ -54,9 +57,6 @@ parameters:
     type: boolean
     default: true
 
-trigger:
-- master
-
 pool:
   vmImage: ubuntu-latest
 
@@ -71,12 +71,12 @@ strategy:
     Python37:
       python.version: '3.7'
 
+steps:
 Conditions:
   UseXRay: eq( variables.EnableXRay, 'true')
   UseOTel: eq( variables.EnableOTel, 'true')
   createSideCar: eq(or(variables.UseXRay, variables.UseOTel))
 
-steps:
 - task: UsePythonVersion@0
   inputs:
     versionSpec: '$(python.version)'
