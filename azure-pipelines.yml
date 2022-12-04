@@ -47,6 +47,12 @@ parameters:
     default:
       - script: echo step one
       - script: echo step two
+  - name: EnableXRay
+    type: boolean
+    default: true
+  - name: EnableOTel
+    type: boolean
+    default: true
 
 trigger:
 - master
@@ -64,6 +70,11 @@ strategy:
       python.version: '3.6'
     Python37:
       python.version: '3.7'
+
+Conditions:
+  UseXRay: eq( variables.EnableXRay, 'true')
+  UseOTel: eq( variables.EnableOTel, 'true')
+  createSideCar: eq(or(variables.UseXRay, variables.UseOTel))
 
 steps:
 - task: UsePythonVersion@0
